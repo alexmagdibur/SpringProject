@@ -1,0 +1,6 @@
+id,name,species,temperament,dailyCost,adoptionCost,abilities
+1,Ember,Phoenix,Calm,5.0,100.0,"Healing,Firebreathing"
+2,Gloom,Shadow Wolf,Fierce,8.0,200.0,"Shadowmeld,Tracking"
+3,Pip,Pixie Fox,Playful,2.0,50.0,"Illusion,Speed"
+4,Stonewall,Rock Golem,Passive,3.0,80.0,"Shield,Tremor"
+5,Aqua,Sea Serpent,Calm,10.0,300.0,"Waterbreathing,Healing"
