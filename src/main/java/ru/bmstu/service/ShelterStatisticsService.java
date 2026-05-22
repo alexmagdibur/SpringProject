@@ -1,4 +1,7 @@
 package ru.bmstu.service;
 
-public class ShelterStatisticsService {
+public interface ShelterStatisticsService {
+    int getTotalCount();
+    int getAdoptedCount();
+    String getMostPopularSpecies();
 }
