@@ -2,6 +2,7 @@ package ru.bmstu;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.bmstu.config.AppConfig;
+import ru.bmstu.domain.Creature;
 import ru.bmstu.service.AdoptionService;
 import ru.bmstu.service.CreatureService;
 import ru.bmstu.service.ShelterStatisticsService;
@@ -15,7 +16,7 @@ public class App {
         var creatureService = context.getBean(CreatureService.class);
         var adoptionService = context.getBean(AdoptionService.class);
         var statsService = context.getBean(ShelterStatisticsService.class);
-        var scanner = new Scanner(System.in); // Scanner НЕ кладём в контекст!
+        var scanner = new Scanner(System.in);
 
         System.out.println("=== Magical Creature Shelter ===");
         boolean running = true;
@@ -64,7 +65,7 @@ public class App {
         context.close();
     }
 
-    private static void printCreature(ru.bmstu.domain.Creature c) {
+    private static void printCreature(Creature c) {
         System.out.printf("[%s] %s (%s) | Temp: %s | Daily: %.1f | Adoption: %.1f | %s%n",
                 c.getId(), c.getName(), c.getSpecies(), c.getTemperament(),
                 c.getDailyCost(), c.getAdoptionCost(), c.getAbilities());

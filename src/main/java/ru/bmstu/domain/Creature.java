@@ -11,7 +11,7 @@ public class Creature {
     private String name;
     private String species;
     private String temperament;
-    private double dailyCost;       // в золотых
+    private double dailyCost;
     private double adoptionCost;
     private List<String> abilities;
 }

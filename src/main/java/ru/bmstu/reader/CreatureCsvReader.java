@@ -22,7 +22,10 @@ public class CreatureCsvReader {
                 String line;
                 boolean firstLine = true;
                 while ((line = br.readLine()) != null) {
-                    if (firstLine) { firstLine = false; continue; }
+                    if (firstLine) {
+                        firstLine = false;
+                        continue;
+                    }
                     String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                     String abilitiesRaw = parts[6].replace("\"", "");
                     List<String> abilities = Arrays.asList(abilitiesRaw.split(","));

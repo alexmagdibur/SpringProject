@@ -1,22 +1,21 @@
 package ru.bmstu.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.bmstu.domain.Creature;
 import ru.bmstu.service.AdoptionService;
 import ru.bmstu.service.CreatureService;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class AdoptionServiceImpl implements AdoptionService {
 
     private final CreatureService creatureService;
-    // Список id уже усыновлённых (в реальном проекте — персистентное хранилище)
-    private final java.util.Set<String> adoptedIds = new java.util.HashSet<>();
-
-    public AdoptionServiceImpl(CreatureService creatureService) {
-        this.creatureService = creatureService;
-    }
+    private final Set<String> adoptedIds = new HashSet<>();
 
     @Override
     public String adopt(String visitorName, double monthlyBudget, String creatureId) {

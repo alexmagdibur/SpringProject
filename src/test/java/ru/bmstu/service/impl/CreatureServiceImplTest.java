@@ -1,9 +1,9 @@
-package service;
+package ru.bmstu.service.impl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.bmstu.domain.Creature;
 import ru.bmstu.service.CreatureService;
-import ru.bmstu.service.impl.CreatureServiceImpl;
 
 import java.util.List;
 
@@ -23,13 +23,11 @@ class CreatureServiceImplTest {
         service = new CreatureServiceImpl(testData);
     }
 
-    // 1. findAll возвращает все существа
     @Test
     void findAll_returnsAllCreatures() {
         assertEquals(3, service.findAll().size());
     }
 
-    // 2. findBySpecies возвращает только нужный вид
     @Test
     void findBySpecies_returnsCorrectSubset() {
         List<Creature> result = service.findBySpecies("Phoenix");
@@ -37,20 +35,17 @@ class CreatureServiceImplTest {
         assertTrue(result.stream().allMatch(c -> c.getSpecies().equals("Phoenix")));
     }
 
-    // 3. findBySpecies с несуществующим видом возвращает пустой список
     @Test
     void findBySpecies_returnsEmptyIfNotFound() {
         assertTrue(service.findBySpecies("Dragon").isEmpty());
     }
 
-    // 4. findByName регистронезависимый поиск
     @Test
     void findByName_isCaseInsensitive() {
         assertFalse(service.findByName("ember").isEmpty());
         assertFalse(service.findByName("EMBER").isEmpty());
     }
 
-    // 5. findById находит существо по id
     @Test
     void findById_returnsCorrectCreature() {
         Creature result = service.findById("1");
@@ -58,13 +53,11 @@ class CreatureServiceImplTest {
         assertEquals("Ember", result.getName());
     }
 
-    // 6. findById возвращает null если id не существует
     @Test
     void findById_returnsNullIfNotFound() {
         assertNull(service.findById("999"));
     }
 
-    // 7. findByTemperament возвращает правильную выборку
     @Test
     void findByTemperament_returnsCorrectSubset() {
         List<Creature> result = service.findByTemperament("Calm");
