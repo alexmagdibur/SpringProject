@@ -4,7 +4,8 @@
       "Bash(python -c ' *)",
       "Bash(where python *)",
       "Bash(where python3 *)",
-      "PowerShell(& \"C:\\\\Users\\\\Alexander\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe\" -c \"from pypdf import PdfReader; r = PdfReader\\('D:/BMSTU/techprog/��5.pdf'\\); print\\(len\\(r.pages\\)\\)\")"
+      "PowerShell(& \"C:\\\\Users\\\\Alexander\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python314\\\\python.exe\" -c \"from pypdf import PdfReader; r = PdfReader\\('D:/BMSTU/techprog/��5.pdf'\\); print\\(len\\(r.pages\\)\\)\")",
+      "Bash(del \"D:\\\\BMSTU\\\\SPRING\\\\SpringProject\\\\src\\\\main\\\\java\\\\ru\\\\bmstu\\\\domain\\\\Visitor.java\")"
     ]
   }
 }

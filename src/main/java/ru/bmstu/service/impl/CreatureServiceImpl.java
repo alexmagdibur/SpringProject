@@ -1,6 +1,5 @@
 package ru.bmstu.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.bmstu.domain.Creature;
 import ru.bmstu.service.CreatureService;
@@ -8,10 +7,13 @@ import ru.bmstu.service.CreatureService;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CreatureServiceImpl implements CreatureService {
 
     private final List<Creature> creatures;
+
+    public CreatureServiceImpl(List<Creature> creatures) {
+        this.creatures = creatures;
+    }
 
     @Override
     public List<Creature> findAll() {

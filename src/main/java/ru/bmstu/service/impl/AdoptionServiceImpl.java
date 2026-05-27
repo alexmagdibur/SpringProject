@@ -1,6 +1,6 @@
 package ru.bmstu.service.impl;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.bmstu.domain.Creature;
 import ru.bmstu.service.AdoptionService;
@@ -11,11 +11,17 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class AdoptionServiceImpl implements AdoptionService {
 
     private final CreatureService creatureService;
     private final Set<String> adoptedIds = new HashSet<>();
+    private double remainingBudget;
+
+    public AdoptionServiceImpl(CreatureService creatureService,
+                               @Value("${shelter.starting.budget}") double startingBudget) {
+        this.creatureService = creatureService;
+        this.remainingBudget = startingBudget;
+    }
 
     @Override
     public String adopt(String visitorName, double monthlyBudget, String creatureId) {
@@ -36,10 +42,22 @@ public class AdoptionServiceImpl implements AdoptionService {
                     findAffordable(monthlyBudget).stream().map(Creature::getName).toList()
             );
         }
+        if (remainingBudget < creature.getAdoptionCost()) {
+            return String.format(
+                    "Adoption denied. Not enough gold: %.2f available, %.2f required. " +
+                            "Consider these alternatives: %s",
+                    remainingBudget,
+                    creature.getAdoptionCost(),
+                    findAffordable(monthlyBudget).stream()
+                            .filter(c -> c.getAdoptionCost() <= remainingBudget)
+                            .map(Creature::getName).toList()
+            );
+        }
         adoptedIds.add(creatureId);
+        remainingBudget -= creature.getAdoptionCost();
         return String.format(
-                "Contract generated! %s has bonded with %s (ID: %s). Adoption cost: %.2f gold.",
-                visitorName, creature.getName(), creatureId, creature.getAdoptionCost()
+                "Contract generated! %s has bonded with %s (ID: %s). Adoption cost: %.2f gold. Remaining budget: %.2f gold.",
+                visitorName, creature.getName(), creatureId, creature.getAdoptionCost(), remainingBudget
         );
     }
 
@@ -49,5 +67,10 @@ public class AdoptionServiceImpl implements AdoptionService {
         return creatureService.findAll().stream()
                 .filter(c -> c.getDailyCost() <= dailyBudget && !adoptedIds.contains(c.getId()))
                 .toList();
+    }
+
+    @Override
+    public double getRemainingBudget() {
+        return remainingBudget;
     }
 }

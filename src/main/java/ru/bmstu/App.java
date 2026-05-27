@@ -19,6 +19,7 @@ public class App {
         var scanner = new Scanner(System.in);
 
         System.out.println("=== Magical Creature Shelter ===");
+        System.out.printf("Starting budget: %.2f gold%n", adoptionService.getRemainingBudget());
         boolean running = true;
         while (running) {
             System.out.println("\n1. List all creatures");
@@ -45,6 +46,7 @@ public class App {
                     creatureService.findByName(scanner.nextLine()).forEach(App::printCreature);
                 }
                 case "5" -> {
+                    System.out.printf("Budget available: %.2f gold%n", adoptionService.getRemainingBudget());
                     System.out.print("Your name: ");
                     String name = scanner.nextLine();
                     System.out.print("Monthly budget (gold): ");
