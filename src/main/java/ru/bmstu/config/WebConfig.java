@@ -26,5 +26,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        // Сначала ищем наш swagger-initializer.js, потом файлы из webjar
+        registry.addResourceHandler("/swagger-ui/**")
+                .addResourceLocations(
+                        "classpath:/swagger-ui/",
+                        "classpath:/META-INF/resources/webjars/swagger-ui/5.32.6/");
     }
 }

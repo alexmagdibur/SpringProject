@@ -11,6 +11,9 @@
     <logger name="org.apache" level="WARN"/>
     <logger name="org.springframework" level="WARN"/>
 
+    <!-- Скрыть 404 для /, /favicon.ico и других неизвестных путей -->
+    <logger name="org.springframework.web.servlet.PageNotFound" level="ERROR"/>
+
     <!-- Наш код — INFO -->
     <logger name="ru.bmstu" level="INFO"/>
 
