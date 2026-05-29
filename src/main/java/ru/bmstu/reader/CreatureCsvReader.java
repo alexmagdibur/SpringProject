@@ -16,7 +16,7 @@ public class CreatureCsvReader {
     public List<Creature> read(String resourcePath) {
         List<Creature> creatures = new ArrayList<>();
         try {
-            ClassPathResource resource = new ClassPathResource(resourcePath);
+            ClassPathResource resource = new ClassPathResource(resourcePath, getClass().getClassLoader());
             try (BufferedReader br = new BufferedReader(
                     new InputStreamReader(resource.getInputStream()))) {
                 String line;

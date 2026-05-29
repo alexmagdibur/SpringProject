@@ -1,0 +1,14 @@
+package ru.bmstu.controller;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AdoptionRequest {
+    private String visitorName;
+    private double monthlyBudget;
+    private String creatureId;
+}
