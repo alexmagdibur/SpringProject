@@ -32,26 +32,33 @@ class CreatureControllerRoleTest {
     }
 
     @Test
-    void getAllAdmin_returns403WhenRoleIsUser() throws Exception {
-        mockMvc.perform(get("/api/v1/creatures/all").header("X-Role", "USER"))
+    void getAllAdmin_returns403WhenKeyIsUser() throws Exception {
+        mockMvc.perform(get("/api/v1/creatures/all").header("X-Api-Key", "user-key-67890"))
                .andExpect(status().isForbidden());
     }
 
     @Test
-    void getAllAdmin_returns200WhenRoleIsAdmin() throws Exception {
-        mockMvc.perform(get("/api/v1/creatures/all").header("X-Role", "ADMIN"))
+    void getAllAdmin_returns200WhenKeyIsAdmin() throws Exception {
+        mockMvc.perform(get("/api/v1/creatures/all").header("X-Api-Key", "admin-key-12345"))
                .andExpect(status().isOk());
     }
 
     @Test
-    void audit_returns403WhenRoleIsUser() throws Exception {
-        mockMvc.perform(get("/api/v1/audit").header("X-Role", "USER"))
+    void audit_returns403WhenKeyIsUser() throws Exception {
+        mockMvc.perform(get("/api/v1/audit").header("X-Api-Key", "user-key-67890"))
                .andExpect(status().isForbidden());
     }
 
     @Test
-    void getAllAdmin_returns403WhenNoHeaderProvided() throws Exception {
+    void getAllAdmin_returns403WhenNoKeyProvided() throws Exception {
+        // без ключа роль USER по умолчанию → ADMIN endpoint → 403
         mockMvc.perform(get("/api/v1/creatures/all"))
                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void getAllAdmin_returns401WhenKeyIsInvalid() throws Exception {
+        mockMvc.perform(get("/api/v1/creatures/all").header("X-Api-Key", "wrong-key"))
+               .andExpect(status().isUnauthorized());
     }
 }

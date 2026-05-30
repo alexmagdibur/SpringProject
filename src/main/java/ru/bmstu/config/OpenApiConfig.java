@@ -14,6 +14,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Magical Creature Shelter API")
                         .version("v1")
-                        .description("REST API for managing magical creature shelter"));
+                        .description("REST API for managing magical creature shelter."));
     }
 }
