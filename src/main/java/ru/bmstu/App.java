@@ -3,6 +3,7 @@ package ru.bmstu;
 import org.apache.catalina.Context;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.tomcat.util.descriptor.web.ErrorPage;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -30,16 +31,33 @@ public class App {
         context.register(AppConfig.class, WebConfig.class);
 
         DispatcherServlet dispatcher = new DispatcherServlet(context);
+
         Context ctx = tomcat.addContext("", null);
         Wrapper servlet = Tomcat.addServlet(ctx, "dispatcher", dispatcher);
         servlet.setLoadOnStartup(1);
         servlet.setAsyncSupported(true);
         ctx.addServletMappingDecoded("/*", "dispatcher");
 
+        // Страховка: ошибки до Spring (фильтры, инициализация) тоже вернут JSON
+        registerTomcatErrorPages(ctx);
+
         tomcat.start();
         System.out.println("Server started at http://localhost:" + PORT);
         System.out.println("Swagger UI: http://localhost:" + PORT + "/swagger-ui/index.html");
         tomcat.getServer().await();
+    }
+
+    private static void registerTomcatErrorPages(Context ctx) {
+        for (int code : new int[]{400, 401, 403, 404, 405, 500}) {
+            ErrorPage page = new ErrorPage();
+            page.setErrorCode(code);
+            page.setLocation("/error");
+            ctx.addErrorPage(page);
+        }
+        ErrorPage exceptionPage = new ErrorPage();
+        exceptionPage.setExceptionType(Throwable.class.getName());
+        exceptionPage.setLocation("/error");
+        ctx.addErrorPage(exceptionPage);
     }
 
     private static void installJulBridge() {
